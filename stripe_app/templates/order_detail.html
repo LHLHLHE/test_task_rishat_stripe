@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Buy Item {{ order.number }}</title>
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+  <body>
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="cts_link">
+        <a href="{% url 'api:orders' %}">Your orders</a>
+    </button>
+    <h1>{{ order.number }}</h1>
+    <button id="buy_button">Buy</button>
+    <script type="text/javascript">
+      var stripe = Stripe('pk_test_51LgyLFDxcK3zNdK7M05iYuwvrOL9Iof3LoceUa7bamOT99Z8OmFlDx1znkydi6iL8p26GAxpG86ahkvKx5MzknlT00BzPfR9E0');
+      var buyButton = document.getElementById('buy_button');
+      buyButton.addEventListener('click', function () {
+        fetch(`/orders/{{ order.id }}/buy`, {method: 'GET'})
+        .then(function (response) {return response.json();})
+        .then(function (session) { return stripe.redirectToCheckout({ sessionId: session.id });})
+      });
+    </script>
+    {% for item in order_items %}
+        {% include 'includes/item.html' %}
+        {% if not forloop.last %}<hr>{% endif %}`
+    {% endfor %}
+  </body>
+</html>

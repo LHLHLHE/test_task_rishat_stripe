@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<head>
+    <title>Order {{ order.number }}</title>
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+  <body>
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="cts_link">
+        <a href="{% url 'api:index' %}">Main page</a>
+    </button>
+    {% for order in orders %}
+        {% include 'includes/order.html' %}
+        {% if not forloop.last %}<hr>{% endif %}`
+    {% endfor %}
+  </body>
+</html>
