@@ -40,8 +40,16 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     id = models.AutoField(primary_key=True)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order')
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='item')
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name='order'
+    )
+    item = models.ForeignKey(
+        Item,
+        on_delete=models.CASCADE,
+        related_name='item'
+    )
 
     class Meta:
         unique_together = ('order', 'item')
